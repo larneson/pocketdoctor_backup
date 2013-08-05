@@ -13,25 +13,23 @@
 	$(document).ready(function(){
 	
 		$('#add_now_button').click(function(){
-			var todo_text=$('#new_item_input').val();
-			if (todo_text != ''){
+			var name_text=$('#name_input').val();
+			var dosage_text=$('#dosage_input').val();
+			var time_text=$('#time_input').val();
+			if (name_text != ''){
 				$("#no_tasks").hide();
-				$('#list').append('<div data-role="button" class="todo_class">'+todo_text +'<button data-icon="star" data-inline=true data-iconpos="notext" class="star_button"></button><button data-icon="delete" data-inline=true data-iconpos="notext" class="delete_button"></button></div>').trigger("create");
-				$('.todo_class').click(function(){
-					$(this).css("background-color","yellow");
-				});
+				$('#list').append('<div data-role="button" class="todo_class">'+name_text + '</br> Dosage: ' + dosage_text + '</br>Time: '+ time_text+ '<button data-icon="delete" data-inline=true data-iconpos="notext" class="delete_button"></button></div>').trigger("create");
+				$('#name_input').val('');
+				$('#dosage_input').val('');
+				$('#time_input').val('');
+				
 			}	
 			$('.delete_button').click(function(){
-				$(this).parent().parent().parent().parent().remove();
+				$(this).parents(".todo_class").remove();
 				if($('#list div').length==0){
 				$("#no_tasks").show();}
 			});
-			$('.star_button').click(function(){
-			if ($(this).parent().parent().parent().parent().attr("data-theme")=='e'){$(this).parent().parent().parent().parent().attr("data-theme","c").trigger('create');
-			}
-			else{
-				$(this).parent().parent().parent().parent().attr("data-theme","e").trigger('create');}
-			});
+			
 		});
 		
 	});
@@ -50,8 +48,12 @@
 		<p>Enter your medications</p>
 		
 		<div data-role="fieldcontain" class="ui-hide-label new_todo_item" action='todo.html'>
-    	<label for="name"></label>
-    	<input type="text" name="name" id="new_item_input" value=""  />
+    	<label for="name">Name of drug:</label>
+    	<input type="text" name="name" id="name_input" value=""  />
+    	<label for="dosage">Dosage:</label>
+    	<input type="text" name="dosage" id="dosage_input" value=""  />
+    	<label for="time">Time:</label>
+    	<input type="time" name="time" id="time_input" value=""  />
     	<input type='submit' value='Add' id="add_now_button"/>
 		</div>	
 	
