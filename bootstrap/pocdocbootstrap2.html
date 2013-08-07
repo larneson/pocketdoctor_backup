@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pocket Doc</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style type='text/css'> body{padding:100px;} #pill_screen{padding:50px;background-color:purple;}#list{padding-bottom:10px}</style>
+    <script src="Snap.js/snap.js">
+    var snapper = new Snap({
+  element: document.getElementById('content')
+});
+    </script>
+	<script>
+	
+	$(document).ready(function(){
+	
+		$('.add_now_button').click(function(){
+			var name_text=$('#name_input').val();
+			var dosage_text=$('#dosage_input').val();
+			var time_text=$('#time_input').val();
+			if (name_text != ''){
+				$("#no_tasks").hide();
+				$('#list').append('<div class="btn todo_class">'+name_text + '</br> Dosage: ' + dosage_text + '</br>Time: '+ time_text+ '<div class="delete_button icon-remove-sign"></div></div>');
+				$('#pill_screen').append('<div class="btn-group pill"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'+name_text+' <span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#">Dosage: '+dosage_text+'</a></li><li><a href="#">Time: '+time_text+'</a></li></ul></div>');
+				$('#name_input').val('');
+				$('#dosage_input').val('');
+				$('#time_input').val('');
+			}	
+			$('.delete_button').click(function(){
+				$(this).parents(".todo_class").remove();
+				if($('#list div').length==0){
+				$("#no_tasks").show();}
+			});
+			$('.todo_class').click(function(){
+			$(this).replaceWith('<div class="btn edit_button"><div  class="ui-hide-label new_todo_item input-group" action="todo.html"><label for="name">Name of drug:</label><input type="text" name="name" id="name_update" value='+name_text+' placeholder="e.g. Tylenol" /><label for="dosage">Dosage:</label><input type="text" name="dosage" id="dosage_update" value="'+dosage_text+'" placeholder="e.g. 200mg" /><label for="time">Time:</label><input type="time" name="time" id="time_update" value="'+time_text+'"/><input type="submit" value="Update" class="update_button"/></div></div>');
+			$('.update_button').click(function(){
+			alert("update");
+			var name_text=$('#name_update').val();
+			var dosage_text=$('#dosage_update').val();
+			var time_text=$('#time_update').val();
+			$(this).parents('.btn').replaceWith('<div class="btn todo_class">'+name_text + '</br> Dosage: ' + dosage_text + '</br>Time: '+ time_text+ '<div class="delete_button icon-remove-sign"></div></div>');
+			
+		});
+		});
+		});
+		
+	});
+	</script>
+</head>
+<body>
+	<div>
+		<h1>Pocket Doctor</h1>
+	</div>
+
+		<h4>Enter your medications</h4>
+		
+		<div  class="ui-hide-label new_todo_item input-group" action='todo.html'>
+    	<label for="name">Name of drug:</label>
+    	<input type="text" name="name" id="name_input" value="" placeholder="e.g. Tylenol" />
+    	<label for="dosage">Dosage:</label>
+    	<input type="text" name="dosage" id="dosage_input" value="" placeholder="e.g. 200mg" />
+    	<label for="time">Time:</label>
+    	<input type="time" name="time" id="time_input" value=""  />
+    	<input type='submit' value='Add' class="add_now_button"/>
+		</div>	
+	
+	<div id=list>
+		<h4>These are the medications you're currently taking. Click to edit.</h4>
+		<span id='no_tasks'>You haven't entered any medications yet!</span>
+	</div>
+	<div id='pill_screen'>
+		<h1>My Pills</h1>
+		<h4>Check off pills you've taken today.</h4>
+	</div>
+	
+</body>
+</html>

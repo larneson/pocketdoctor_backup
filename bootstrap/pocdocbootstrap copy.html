@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>egterdg</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style type='text/css'></style>
+	<script>
+	
+	$(document).ready(function(){
+	
+		$('#add_now_button').click(function(){
+			var name_text=$('#name_input').val();
+			var dosage_text=$('#dosage_input').val();
+			var time_text=$('#time_input').val();
+			if (name_text != ''){
+				$("#no_tasks").hide();
+				$('#list').append('<div data-role="button" class="todo_class">'+name_text + '</br> Dosage: ' + dosage_text + '</br>Time: '+ time_text+ '<button data-icon="delete" data-inline=true data-iconpos="notext" class="delete_button"></button></div>').trigger("create");
+				$('#name_input').val('');
+				$('#dosage_input').val('');
+				$('#time_input').val('');
+				
+			}	
+			$('.delete_button').click(function(){
+				$(this).parents(".todo_class").remove();
+				if($('#list div').length==0){
+				$("#no_tasks").show();}
+			});
+			
+		});
+		
+	});
+	</script>
+	
+</head>
+<body>
+
+<div >
+
+	<div>
+		<h1>Pocket Doctor</h1>
+	</div>
+<div id='user' class='btn-group'>
+  		<a class="btn" href="#"><i class="icon-globe"></i> Privacy</a>
+  		<a class="btn  dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+ 	 <ul class="dropdown-menu">
+   	 <li><a href="#"><i class="icon-ok"></i><i class="icon-globe"></i> Public</a></li>
+    	<li><a href="#"><i class="icon-user"></i> Friends</a></li>
+   		 <li><a href="#"><i class="icon-lock"></i>Me Only</a></li>
+   		 <li><a href="#"><i class="icon-minus"></i><i class="icon-briefcase"></i> Business</a></li>
+   		 <li><a href="#"><i class=""></i><i class="icon-cog"></i> Custom</a></li>
+    	 <li><a href="#"><i class="icon-map-marker"></i> San Francisco, CA Area</a></li>
+    	<li><a href="#"><i class="i"></i> See all lists...</a></li>
+ 	 </ul>
+    </div>
+	<div >
+		<p>Enter your medications</p>
+		<div class="input-group">
+  <input type="text" class="form-control" placeholder="Username">
+</div>
+		<div  class="ui-hide-label new_todo_item input-group" action='todo.html'>
+    	<label for="name">Name of drug:</label>
+    	<input type="text" name="name" id="name_input" value=""  />
+    	<label for="dosage">Dosage:</label>
+    	<input type="text" name="dosage" id="dosage_input" value=""  />
+    	<label for="time">Time:</label>
+    	<input type="time" name="time" id="time_input" value=""  />
+    	<input type='submit' value='Add' id="add_now_button"/>
+		</div>	
+	
+	<ul id=list>
+		<span id='no_tasks'>No medications</span>
+	</ul>
+	</div>
+	
+</body>
+</html>
