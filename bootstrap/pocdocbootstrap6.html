@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pocket Doc</title>
+	
+	<script>
+	</script>
+</head>
+<body>
+	<div>
+		<h1>Pocket Doctor</h1>
+	</div>
+
+		<h4>Enter your medications</h4>
+		
+		<div>
+    	<label >Name of drug:</label>
+    	<input type="text" id="name_input" value="" placeholder="e.g. Tylenol" />
+    	<label for="dosage">Dosage:</label>
+    	<input type="text" name="dosage" id="dosage_input" value="" placeholder="e.g. 200mg" />
+    	<label for="time">Time:</label>
+    	<input type="time" name="time" id="time_input" value=""  />
+    	<input type='submit' value='Add' class="add_now_button"/>
+		</div>	
+	
+	<div id=med_screen>
+		<h4>These are the medications you're currently taking. Click to edit.</h4>
+		<span id='no_tasks'>You haven't entered any medications yet!</span>
+	</div>
+	<div id='pill_screen' >
+		<h1>My Pills </h1>
+		<h4>Check off pills that you've taken today.</h4>
+	</div>
+	
+</body>
+</html>

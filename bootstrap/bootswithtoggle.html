@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Toggle Boots</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style type='text/css'> body{padding:100px;} #pill_screen{padding:50px;background-color:#a3dae5;color: #007ab7;}#list{padding-bottom:10px}</style>
+	<script>
+	
+	var makeMed=function(name_text,dosage_text,time_text){
+		$('#list').append('<div class="med_class"><div class="btn med_small"><span class="name_class">'+name_text + '</span><span></br> Dosage: ' + dosage_text + '</span></br><span>Time: '+ time_text+ '</span><div class="delete_button icon-remove-sign"></div></div>         <div class="btn med_form"><div  class="input-group" action="todo.html"><label for="name">Name of drug:</label><input type="text" name="name" class="name_update" value='+name_text+' placeholder="e.g. Tylenol" /><label for="dosage">Dosage:</label><input type="text" name="dosage" class="dosage_update" value="'+dosage_text+'" placeholder="e.g. 200mg" /><label for="time">Time:</label><input type="time" name="time" class="time_update" value="'+time_text+'"/><input type="submit" value="Update" class="update_button"/></div></div></div>');
+		$('.delete_button').click(function(){
+				$(this).parents(".med_class").remove();
+				if($('#list div').length==0){
+					$("#no_tasks").show();}
+						});
+		$('.med_form').hide();
+		$('.med_small').click(function(){
+			$(this).hide();
+			$(this).siblings('.med_form').show();
+			});
+		$('.update_button').click(function(){
+			//name_text=$(this).siblings('.name_update').val();
+			dosage_text=$(this).siblings('.dosage_update').val();
+			time_text=$(this).siblings('.time_update').val();
+			
+			$(this).parents(".med_class").find('.name_class').text($(this).siblings('.name_update').val());
+			
+			$(this).parents('.med_form').hide();
+			$(this).parents('.med_form').siblings('.med_small').show(); 
+		});
+		
+	};
+	
+	$(document).ready(function(){
+	
+		$('.add_now_button').click(function(){
+			var name_text=$('#name_input').val();
+			var dosage_text=$('#dosage_input').val();
+			var time_text=$('#time_input').val();
+				if (name_text != ''){
+					$("#no_tasks").hide();
+					makeMed(name_text,dosage_text,time_text);
+					//makePill(name_text,dosage_text,time_text);
+				$('#name_input').val('');
+				$('#dosage_input').val('');
+				$('#time_input').val('');
+				}	
+			
+		});
+	});
+	</script>
+</head>
+<body>
+	<div>
+		<h1>Pocket Doctor</h1>
+	</div>
+
+		<h4>Enter your medications</h4>
+		
+		<div  class="ui-hide-label new_todo_item input-group" action='todo.html'>
+    	<label for="name">Name of drug:</label>
+    	<input type="text" name="name" id="name_input" value="" placeholder="e.g. Tylenol" />
+    	<label for="dosage">Dosage:</label>
+    	<input type="text" name="dosage" id="dosage_input" value="" placeholder="e.g. 200mg" />
+    	<label for="time">Time:</label>
+    	<input type="time" name="time" id="time_input" value=""  />
+    	<input type='submit' value='Add' class="add_now_button"/>
+		</div>	
+	
+	<div id=list>
+		<h4>These are the medications you're currently taking. Click to edit.</h4>
+		<span id='no_tasks'>You haven't entered any medications yet!</span>
+	</div>
+	<div id='pill_screen' >
+		<h1>My Pills </h1>
+		<h4>Check off pills that you've taken today.</h4>
+	</div>
+	
+</body>
+</html>

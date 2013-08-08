@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Pocket Doc Version Control</title>
+	<title>Pocket Doc</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -9,14 +9,9 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <style type='text/css'> body{padding:100px;} #pill_screen{padding:50px;background-color:#a3dae5;color: #007ab7;}#list{padding-bottom:10px}</style>
-    <script src="Snap.js/snap.js">
-    
-    </script>
 	<script>
 	
-	var edit_update=function(element,name_text,dosage_text,time_text){
-			$(element).replaceWith('<div class="btn edit_button"><div  class="ui-hide-label new_todo_item input-group" action="todo.html"><label for="name">Name of drug:</label><input type="text" name="name" id="name_update" value='+name_text+' placeholder="e.g. Tylenol" /><label for="dosage">Dosage:</label><input type="text" name="dosage" id="dosage_update" value="'+dosage_text+'" placeholder="e.g. 200mg" /><label for="time">Time:</label><input type="time" name="time" id="time_update" value="'+time_text+'"/><input type="submit" value="Update" class="update_button"/></div></div>');
-	}
+	
 	
 	var makeMed=function(name_text,dosage_text,time_text){
 		$('#list').append('<div class="btn todo_class">'+name_text + '</br> 							Dosage: ' + dosage_text + '</br>Time: '+ time_text+ '<div class="delete_button icon-remove-sign"></div></div>');
@@ -32,7 +27,7 @@
 				var name_text=$('#name_update').val();
 				var dosage_text=$('#dosage_update').val();
 				var time_text=$('#time_update').val();
-				makeMed(name_text,dosage_text,time_text);
+				$(this).parents('.btn').replaceWith('<div class="btn todo_class">'+name_text + '</br> Dosage: ' + dosage_text + '</br>Time: '+ time_text+ '<div class="delete_button icon-remove-sign"></div></div>');
 				});
 	}
 	var makePill=function(name_text,dosage_text,time_text){
@@ -54,14 +49,6 @@
 				$('#time_input').val('');
 			}	
 			
-			$('.todo_class').click(function(){
-				edit_update(this,name_text,time_text,dosage_text);
-			$('.update_button').click(function(){
-				var name_text=$('#name_update').val();
-				var dosage_text=$('#dosage_update').val();
-				var time_text=$('#time_update').val();
-				makeMed(name_text,dosage_text,time_text);
-				});
 			});
 		});
 		
@@ -75,7 +62,7 @@
 
 		<h4>Enter your medications</h4>
 		
-		<div >
+		<div  class="ui-hide-label new_todo_item input-group" action='todo.html'>
     	<label for="name">Name of drug:</label>
     	<input type="text" name="name" id="name_input" value="" placeholder="e.g. Tylenol" />
     	<label for="dosage">Dosage:</label>
