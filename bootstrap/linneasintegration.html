@@ -6,26 +6,36 @@
 <title>Pocket Doctor Panels</title>
 
 
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+ <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<meta http-equiv="Expires" content="Mon, 23 May 2050 20:17:44 GMT">
+
+<!-- breaks without this-->
 <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<!-- gives arrow icons-->
 <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
 <link href="bootpanels.css" rel="stylesheet">
+
 <!--[if IE 7]>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome-ie7.min.css" rel="stylesheet">
 <![endif]-->
 
 <style>
 	/* font size on the front panel */
-	.navbar{font-size: 70px;
+	.navbar{font-size: 70px;min-height:40px;
 	}
-	#my_pills{padding:50px;background-color:#a3dae5;color: #007ab7;width:auto;;}
+	html{height:100%}
+	#my_pills{padding:50px;background-color:#a3dae5;color: #005a97;width:auto;min-height:100%;}
      #list{padding-bottom:10px}
-     #pill_screen{padding:10px;background-color:#fff;width:80%;margin-left: auto; margin-right: auto;}
-     #pill_bottle{padding:10px;background-color:#ff9900;width:70%;margin-left: auto; margin-right: auto;}
+     #pill_screen{padding:10px;background-color:#fff;width:80%;margin-left: auto; margin-right: auto;color:#666;text-align:center;}
+     #pill_bottle{padding:10px; height: auto; min-height:300px; background-color:#ff9900;width:70%;margin-left: auto; margin-right: auto; overflow:scroll;color:#444;text-align:center;}
      #center_style{width: auto; height: auto; color:#000;}
+     #left_style{padding:20px;background-color: #eee;color:#101060;}
+     #right_style{padding:20px;color: #fff;}
+     .med_class{display:inline;}
+     #says_pocket_doctor{text-align:center}
+     .navbar{color:#000059}
+     body{height:100%}
 </style>
 <script>
 	
@@ -40,7 +50,7 @@
 					$(this).find('.btn').addClass('btn-success');}
 				else if (color_text == 'Teal'){
 					$(this).find('.btn').addClass('btn-info');}
-				else if (color_text == 'Yellow'){
+				else if (color_text == 'Orange'){
 					$(this).find('.btn').addClass('btn-warning');}
 				else if (color_text == 'Red'){
 					$(this).find('.btn').addClass('btn-danger');}
@@ -53,6 +63,7 @@
 		$('#list').append('<div class="med_class"><div class="btn med_small"><span class="name_class">'+name_text + '</span></br> Dosage: <span class="dosage_class">' + dosage_text + '</span></br>Time: <span class="time_class">'+ time_text+ '</span></div>         <div class="btn med_form"><div  class="input-group" action="todo.html"><label for="name">Name of drug:</label><input type="text" name="name" class="name_update" value="'+name_text+'" placeholder="e.g. Tylenol" /><label for="dosage">Dosage:</label><input type="text" name="dosage" class="dosage_update" value="'+dosage_text+'" placeholder="e.g. 200mg" /><label for="time">Time:</label><input type="time" name="time" class="time_update" value="'+time_text+'"/></br><input type="submit" value="Update" class="update_button"/><input type="submit" value="Cancel" class="cancel_button"/><input type="submit" value="Delete" class="delete_button"/></div></div></div>');
 		$('#pill_screen').append('<div class="btn-group pill"><button class="btn  when_taken"><span class= "name_class">'+name_text+'</span> </button><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button><ul class="dropdown-menu"><li><a>Dosage: <span class="dosage_class">'+dosage_text+'</span></a></li><li><a>Time: <span class="time_class">'+time_text+'</span></a></li></ul></div>');
 	
+		
 		
 		$('.med_form').hide();
 		$('.med_small').click(function(){
@@ -141,33 +152,33 @@
 </head>
 <body>
   <!-- creates the sidebars-->
-<div id="navbar-phone" class="navbar navbar-fixed-top slide-panel center visible-phone">
+<div id="navbar-phone" class="navbar navbar-fixed-top slide-panel center visible-phone  visible-tablet">
   <div class="navbar-inner">
     <div class="sidebars">
     <!-- the format and icon of the sidebars-->
-      <a id="navbar-btn-menu" class="btn btn-navbar pull-left" data-toggle="slide" data-target=".slide-panel.left">
-      	<button class="btn btn-large"><i class="icon-arrow-left"></i></button></a>
-      <a class="btn btn-navbar" data-toggle="slide" data-target=".slide-panel.right"> 
-      	<button class="btn btn-large"><i class="icon-arrow-right"></i></button></a>
+      <a id="navbar-btn-menu" class=" pull-left" data-toggle="slide" data-target=".slide-panel.left">
+      	<button class="btn btn-large btn-primary"><i class="icon-arrow-left"></i></button></a>
+      <a class="" data-toggle="slide" data-target=".slide-panel.right"> 
+      	<button class="btn btn-large pull-right btn-primary"><i class="icon-arrow-right"></i></button></a>
       	
 
     </div>
-     <h1>Pocket Doctor<h1>
+     <h1 id='says_pocket_doctor'>Pocket Doctor<h1>
   </div>
   
 </div>
 
  
 <!-- put things into the left panel -->
-<div class="meds">
-   <div id="panel-left" class="span2 slide-panel left">
-    <div style="color: #fff;" class="contain">
+
+   <div id="panel-left" class="span5 slide-panel left">
+    <div id='left_style' class="contain">
       <!-- stuff here -->
       <div>
-		<h1>Pocket Doctor</h1>
+		<h1>My Medications</h1>
 	</div>
 
-		<h4>Enter your medications</h4>
+		<h4>Enter your medications here</h4>
 		
 		<div  class="input-group" action='todo.html'>
     	<label for="name">Name of drug:</label>
@@ -186,7 +197,7 @@
   			<option>Blue</option>
   			<option>Green</option>
   			<option>Teal</option>
-  			<option>Yellow</option>
+  			<option>Orange</option>
 			<option>Red</option>
 		</select>
 	</div>
@@ -199,21 +210,20 @@
 		<h4>These are the medications you're currently taking. Click to edit.</h4>
 		<span id='no_tasks'>You haven't entered any medications yet!</span>
 	</div>
-	
-	
     </div>
   </div>
-  </div>
+  
   
   <!-- put things in the center panel -->
-  <div id="panel-center" class="span8 slide-panel center">
+  <div id="panel-center" class="span7 slide-panel center">
     <div id='center_style' >
   
 
 	<!-- stuff here!-->
 	<div id='my_pills' >
-		<h1>My Pills </h1>
-		<h4>Check off pills that you've taken today.</h4>
+		<h1 id='says_pill_bottle'>Pill Bottle </h1>
+		
+		<h4>Click on pills to move them into the bottle.</h4>
 		<div id='pill_screen' class='which_pill'>
 			<h4>These are the pills you haven't taken.</h4>
 		</div>
@@ -225,18 +235,21 @@
     </div><!-- /.panel-center .contain -->
   </div><!-- /.panel-center --> 
 <!-- start of right panel -->
-  <div id="panel-right" class="span2 slide-panel right">
-    <div class="contain" style=" color:#fff;" >
+  <div id="panel-right" class="span5 slide-panel right">
+    <div class="contain" id='right_style' >
 	<!-- stuff here-->
-	
+	yolo
     </div>
   </div>
 <!-- end of right panel -->
 
 
 
+<!--doesn't break it-->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<!-- can be deleted. this is the script that breaks the dropdowns
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>-->
+<!-- doesn't slide panels without this, and dropdowns work. myboots doesn't change the fact that it only works in small-->
 <script type="text/javascript" src="bootpanels.js"></script>
 
 
