@@ -65,7 +65,18 @@
 			$(this).parents('.med_form').hide();
 			$(this).parents('.med_form').siblings('.med_small').show(); 
 		});
-				
+		
+		$('.when_taken').unbind('click').click(function(){
+			if ($(this).parents('.which_pill').attr('id') == 'pill_screen'){
+				$(this).parents('.pill').appendTo($('#pill_bottle'));
+				console.log('move into pill bottle');
+				}
+			else if ($(this).parents('.which_pill').attr('id') == 'pill_bottle'){
+				$('#pill_screen').append($(this).parents('.pill'));
+				console.log('move into pill screen');
+			}
+			return false;
+		});
 	};
 	
 	$(document).ready(function(){
@@ -109,10 +120,10 @@
 	<div id='my_pills' >
 		<h1>My Pills </h1>
 		<h4>Check off pills that you've taken today.</h4>
-		<div id='pill_screen'>
+		<div id='pill_screen' class='which_pill'>
 			<h4>These are the pills you haven't taken.</h4>
 		</div>
-		<div id='pill_bottle'>
+		<div id='pill_bottle' class="which_pill">
 			<h4>These are the pills you've already taken.</h4>
 		</div>
 	</div>
