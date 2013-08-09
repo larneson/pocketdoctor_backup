@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Toggle Colors!</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pocket Doctor Panels</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <style type='text/css'> body{padding:100px;}
-     #my_pills{padding:50px;background-color:#a3dae5;color: #007ab7;}
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<meta http-equiv="Expires" content="Mon, 23 May 2050 20:17:44 GMT">
+<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+<link href="bootpanels.css" rel="stylesheet">
+<!--[if IE 7]>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome-ie7.min.css" rel="stylesheet">
+<![endif]-->
+
+<style>
+	/* font size on the front panel */
+	.navbar{font-size: 70px;
+	}
+	#my_pills{padding:50px;background-color:#a3dae5;color: #007ab7;width:auto;;}
      #list{padding-bottom:10px}
-     #pill_screen{margin:20px,20px,0px;padding:10px;background-color:#fff;color:#666}
-     #pill_bottle{margin:0px,40px;20px;padding:10px;padding-bottom:40px;background-color:#ff9900;overflow:scroll;color:#ddd}
-     </style>
-	<script>
+     #pill_screen{padding:10px;background-color:#fff;width:80%;margin-left: auto; margin-right: auto;}
+     #pill_bottle{padding:10px;background-color:#ff9900;width:70%;margin-left: auto; margin-right: auto;}
+     #center_style{width: auto; height: auto; color:#000;}
+</style>
+<script>
 	
 
 
@@ -127,7 +140,30 @@
 	</script>
 </head>
 <body>
-	<div>
+  <!-- creates the sidebars-->
+<div id="navbar-phone" class="navbar navbar-fixed-top slide-panel center visible-phone">
+  <div class="navbar-inner">
+    <div class="sidebars">
+    <!-- the format and icon of the sidebars-->
+      <a id="navbar-btn-menu" class="btn btn-navbar pull-left" data-toggle="slide" data-target=".slide-panel.left">
+      	<button class="btn btn-large"><i class="icon-arrow-left"></i></button></a>
+      <a class="btn btn-navbar" data-toggle="slide" data-target=".slide-panel.right"> 
+      	<button class="btn btn-large"><i class="icon-arrow-right"></i></button></a>
+      	
+
+    </div>
+     <h1>Pocket Doctor<h1>
+  </div>
+  
+</div>
+
+ 
+<!-- put things into the left panel -->
+<div class="meds">
+   <div id="panel-left" class="span2 slide-panel left">
+    <div style="color: #fff;" class="contain">
+      <!-- stuff here -->
+      <div>
 		<h1>Pocket Doctor</h1>
 	</div>
 
@@ -163,9 +199,21 @@
 		<h4>These are the medications you're currently taking. Click to edit.</h4>
 		<span id='no_tasks'>You haven't entered any medications yet!</span>
 	</div>
+	
+	
+    </div>
+  </div>
+  </div>
+  
+  <!-- put things in the center panel -->
+  <div id="panel-center" class="span8 slide-panel center">
+    <div id='center_style' >
+  
+
+	<!-- stuff here!-->
 	<div id='my_pills' >
 		<h1>My Pills </h1>
-		<h4>Click on pills to move them into the bottle.</h4>
+		<h4>Check off pills that you've taken today.</h4>
 		<div id='pill_screen' class='which_pill'>
 			<h4>These are the pills you haven't taken.</h4>
 		</div>
@@ -173,6 +221,24 @@
 			<h4>These are the pills you've already taken.</h4>
 		</div>
 	</div>
+
+    </div><!-- /.panel-center .contain -->
+  </div><!-- /.panel-center --> 
+<!-- start of right panel -->
+  <div id="panel-right" class="span2 slide-panel right">
+    <div class="contain" style=" color:#fff;" >
+	<!-- stuff here-->
 	
+    </div>
+  </div>
+<!-- end of right panel -->
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootpanels.js"></script>
+
+
 </body>
-</html>
+</html> 
