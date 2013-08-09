@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Toggle Colors!</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style type='text/css'> body{padding:100px;} #my_pills{padding:50px;background-color:#a3dae5;color: #007ab7;}#list{padding-bottom:10px}#pill_screen{margin:20px;padding:10px;background-color:#fff}#pill_bottle{margin:20px;padding:10px;background-color:purple}</style>
+	<script>
+	
+	var old_name;
+var name_text;
+
+	var colorPill=function(color_text){
+		$('.pill').each(function(){	
+			if ($(this).find('.name_class').text() == $('#name_input').val()){
+				if (color_text == 'Blue'){
+					$(this).find('.btn').addClass('btn-primary');}
+				else if (color_text == 'Green'){
+					$(this).find('.btn').addClass('btn-success');}
+				else if (color_text == 'Teal'){
+					$(this).find('.btn').addClass('btn-info');}
+				else if (color_text == 'Yellow'){
+					$(this).find('.btn').addClass('btn-warning');}
+				else if (color_text == 'Red'){
+					$(this).find('.btn').addClass('btn-danger');}
+					
+
+				};
+});
+
+	};
+	
+	var makeMed=function(name_text,dosage_text,time_text){
+		$('#list').append('<div class="med_class"><div class="btn med_small"><span class="name_class">'+name_text + '</span></br> Dosage: <span class="dosage_class">' + dosage_text + '</span></br>Time: <span class="time_class">'+ time_text+ '</span></div>         <div class="btn med_form"><div  class="input-group" action="todo.html"><label for="name">Name of drug:</label><input type="text" name="name" class="name_update" value="'+name_text+'" placeholder="e.g. Tylenol" /><label for="dosage">Dosage:</label><input type="text" name="dosage" class="dosage_update" value="'+dosage_text+'" placeholder="e.g. 200mg" /><label for="time">Time:</label><input type="time" name="time" class="time_update" value="'+time_text+'"/></br><input type="submit" value="Update" class="update_button"/><input type="submit" value="Cancel" class="cancel_button"/><input type="submit" value="Delete" class="delete_button"/></div></div></div>');
+		$('#pill_screen').append('<div class="btn-group pill"><button class="btn  when_taken"><span class= "name_class">'+name_text+'</span> </button><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button><ul class="dropdown-menu"><li><a>Dosage: <span class="dosage_class">'+dosage_text+'</span></a></li><li><a>Time: <span class="time_class">'+time_text+'</span></a></li></ul></div>');
+	
+		
+		$('.med_form').hide();
+		$('.med_small').click(function(){
+			$(this).hide();
+			$(this).siblings('.med_form').show();
+			});
+		$('.update_button').click(function(){
+			var old_name = $(this).parents(".med_class").find('.name_class').text();
+			var new_name = $(this).siblings('.name_update').val();
+			var new_dosage = $(this).siblings('.dosage_update').val();
+			var new_time = $(this).siblings('.time_update').val();
+			
+			//check each pill and reset names
+			$('.pill').each(function(){			
+				if ($(this).find('.name_class').text() == old_name){
+					$(this).find('.name_class').text(new_name);
+					$(this).find('.dosage_class').text(new_dosage)
+					$(this).find('.time_class').text(new_time)
+				};
+			});
+			
+			$(this).parents(".med_class").find('.name_class').text(new_name);
+			$(this).parents(".med_class").find('.dosage_class').text( $(this).siblings('.dosage_update').val());
+			$(this).parents(".med_class").find('.time_class').text( $(this).siblings('.time_update').val());
+			
+			//toggle big screen hiding
+			$(this).parents('.med_form').hide();
+			$(this).parents('.med_form').siblings('.med_small').show(); 
+		});
+		
+		$('.delete_button').click(function(){
+			var old_name = $(this).parents(".med_class").find('.name_class').text();
+				$('.pill').each(function(){	
+					if ($(this).find('.name_class').text() == old_name){
+						$(this).remove();
+				};
+			});
+				$(this).parents(".med_class").remove();
+				if($('#list div').length==0){
+					$("#no_tasks").show();}
+						});
+		$('.cancel_button').click(function(){
+			 //note to self: fix so that when you click again the text inside changes back
+			 
+			//toggle big screen hiding
+			$(this).parents('.med_form').hide();
+			$(this).parents('.med_form').siblings('.med_small').show(); 
+		});
+		
+		$('.when_taken').unbind('click').click(function(){
+			if ($(this).parents('.which_pill').attr('id') == 'pill_screen'){
+				$(this).parents('.pill').appendTo($('#pill_bottle'));
+				console.log('move into pill bottle');
+				}
+			else if ($(this).parents('.which_pill').attr('id') == 'pill_bottle'){
+				$('#pill_screen').append($(this).parents('.pill'));
+				console.log('move into pill screen');
+			}
+			return false;
+		});
+	};
+	
+	$(document).ready(function(){
+		$('#more_options').hide();
+		$('.add_button').click(function(){
+			var name_text=$('#name_input').val();
+			var dosage_text=$('#dosage_input').val();
+			var time_text=$('#time_input').val();
+			var color_text =$('#color_input').val();
+				if (name_text != ''){
+					$("#no_tasks").hide();
+					makeMed(name_text,dosage_text,time_text);
+					colorPill(color_text);
+				$('#name_input').val('');
+				$('#dosage_input').val('');
+				$('#time_input').val('');
+				$('#color_input').val('Gray');
+
+				$('#more_options').hide();
+				}	
+			
+		});
+		$('.more_button').click(function(){
+			$('#more_options').show();
+			console.log($('.form-control').val());
+		});
+	});
+	</script>
+</head>
+<body>
+	<div>
+		<h1>Pocket Doctor</h1>
+	</div>
+
+		<h4>Enter your medications</h4>
+		
+		<div  class="input-group" action='todo.html'>
+    	<label for="name">Name of drug:</label>
+    	<input type="text" name="name" id="name_input" value="" placeholder="e.g. Tylenol" />
+</br>
+    	<label for="dosage">Dosage:</label>
+    	<input type="text" name="dosage" id="dosage_input" value="" placeholder="e.g. 200mg" />
+</br>
+    	<label for="time">Time:</label>
+    	<input type="time" name="time" id="time_input" value=""  />
+</br>
+	<div id = 'more_options'>
+		<label>Color: </label>
+		<select id="color_input" class="form-control" value='5'>
+  			<option>Gray</option>
+  			<option>Blue</option>
+  			<option>Green</option>
+  			<option>Teal</option>
+  			<option>Yellow</option>
+			<option>Red</option>
+		</select>
+	</div>
+   	<input type='submit' value='Add' class="btn btn-primary add_button"/>
+	<input type='submit' value='More Options' class="btn more_button"/>
+		</div>	
+
+	
+	<div id=list>
+		<h4>These are the medications you're currently taking. Click to edit.</h4>
+		<span id='no_tasks'>You haven't entered any medications yet!</span>
+	</div>
+	<div id='my_pills' >
+		<h1>My Pills </h1>
+		<h4>Check off pills that you've taken today.</h4>
+		<div id='pill_screen' class='which_pill'>
+			<h4>These are the pills you haven't taken.</h4>
+		</div>
+		<div id='pill_bottle' class="which_pill">
+			<h4>These are the pills you've already taken.</h4>
+		</div>
+	</div>
+	
+</body>
+</html>
