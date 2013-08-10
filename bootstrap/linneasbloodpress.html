@@ -6,24 +6,45 @@
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <style type='text/css'> body{padding:50px;}
+  .date_pressure_col{width:25%}
+  .time_pressure_col{width:15%}
   
   </style>
 <script>
-var getToday = function(){
+var whatDate = function(){
 	var d = new Date();
 	var month = d.getMonth()+1;
 	var day = d.getDate();
 	var output = month + '/' + day +'/' + d.getFullYear();
 	return output;
 }
+var whatTime = function(){
+	var d = new Date();
+	var hours = d.getHours();
+	var minutes = d.getMinutes();
+	var output = hours + ':' + minutes;
+	return output;
+}
+var whatMeal = function(){
+	var d = new Date();
+	var hours = d.getHours();
+	if (hours<=11){
+		$('#meal_input').val('Breakfast');}
+	else if (hours>11&&hours<=16){
+		$('#meal_input').val('Lunch');}
+	else if(hours>16){
+		$('#meal_input').val('Dinner');}
+}
 
 $(document).ready(function(){
+	whatMeal();
 	$('#add_pressure').click(function(){
-	var date_text = getToday();
-	var systolic_text = $('#systolic_input').val();
-	var diastolic_text = $('#diastolic_input').val();
+		var date_text = whatDate();
+		var time_text = whatTime();
+		var systolic_text = $('#systolic_input').val();
+		var diastolic_text = $('#diastolic_input').val();
 		$('#pressure_log').prepend(
-		'<tr><td>'+date_text+'</td> <td>'+systolic_text+'/'+diastolic_text+'</td></tr>');
+		'<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col">'+systolic_text+' / '+diastolic_text+'</td><td class="time_pressure_col">'+time_text+'</td></tr>');
 	});
 });
 </script>
@@ -36,13 +57,33 @@ $(document).ready(function(){
     	<input type="text"  id="systolic_input" value="" placeholder="Systolic " />
     	&nbsp/&nbsp
     	<input type="text" id="diastolic_input" value="" placeholder="Diastolic" />
-</br>
-	</div>
-   	<input type='submit' id='add_pressure' value='Add' class="btn btn-primary add_button"/>
+   		<input type='submit' id='add_pressure' value='Add' class="btn btn-primary add_button"/>
 	
 		</div>	
 <table id='pressure_log' class='table'>
 	<h4>Blood Pressure</h4>
+</table>
+
+<div id='sugar_input'>
+<h3>Add Blood Sugar Data</h3>
+	<select id='meal_input' class="form-control" value=''>
+  			<option>None Selected</option>
+  			<option>Breakfast</option>
+  			<option>Lunch</option>
+  			<option>Dinner</option>
+		</select>
+	<select id='before_after_input' class="form-control" >
+  			<option>None Selected</option>
+  			<option>Before</option>
+  			<option>After</option>
+		</select>
+	<input type='text' id='reading_input'/>
+	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
+
+</div>
+
+<table id='sugar_log' class='table'>
+	<h4>Blood Sugar</h4>
 </table>
 
 </body>
