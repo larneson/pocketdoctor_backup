@@ -22,6 +22,7 @@ var whatTime = function(){
 	var d = new Date();
 	var hours = d.getHours();
 	var minutes = d.getMinutes();
+	if (minutes<10){minutes='0'+minutes}
 	var output = hours + ':' + minutes;
 	return output;
 }
@@ -35,20 +36,10 @@ var whatMeal = function(){
 	else if(hours>16){
 		$('#meal_input').val('Dinner');}
 }
-var makePressure=function(){}
-
-$(document).ready(function(){
-alert(whatTime());
-	whatMeal();
-	$('#add_pressure').click(function(){
-		var date_text = whatDate();
-		var time_text = whatTime();
-		var systolic_text = $('#systolic_input').val();
-		var diastolic_text = $('#diastolic_input').val();
-		$('#pressure_log').prepend(
-		'<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col">'+systolic_text+' / '+diastolic_text+'</td><td class="time_pressure_col">'+time_text+'</td></tr>');
-	});
-	$('#add_sugar').click(function(){
+var makeSugar=function(){
+$('#add_sugar').click(function(){
+	var reading_text = $('#reading_input').val();
+	if (reading_text !=''){
 		var date_text = whatDate();
 		var time_text = whatTime();
 		if ($('#meal_input').val()!='None Selected'){
@@ -62,12 +53,35 @@ alert(whatTime());
 			var before_after_text = 'After';}
 		else{
 			var before_after_text = '';}
-		
-		
-		var reading_text = $('#reading_input').val();
-		$('#sugar_log').prepend(
-		'<tr><td class="date_sugar_col">'+date_text+'</td> <td>'+before_after_text+'</td><td>'+reading_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
+		if($('#sugar_log tr').first().find('.before_after_col').text()=='Before' &&
+		$('#sugar_log tr').first().find('.date_sugar_col').text()==date_text &&
+		$('#sugar_log tr').first().find('.meal_col').text()==meal_text &&
+		before_after_text == 'After' &&
+		$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan')!=2){
+			$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan','2');
+			$('#sugar_log tr').first().find('.meal_col').attr('rowspan','2');
+			$('tr').first().after('<tr><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
+			
+			}
+		else{
+			$('#sugar_log').prepend('<tr> <td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
+		}
+	}
 	});
+}
+
+$(document).ready(function(){
+	whatMeal();
+	$('#add_pressure').click(function(){
+		var date_text = whatDate();
+		var time_text = whatTime();
+		var systolic_text = $('#systolic_input').val();
+		var diastolic_text = $('#diastolic_input').val();
+		$('#pressure_log').prepend(
+		'<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col">'+systolic_text+' / '+diastolic_text+'</td><td class="time_pressure_col">'+time_text+'</td><td><input type="text"/></td></tr>');
+		
+	});
+	makeSugar();
 });
 </script>
 </head>
