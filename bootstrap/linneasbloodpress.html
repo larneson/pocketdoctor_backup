@@ -38,6 +38,7 @@ var whatMeal = function(){
 var makePressure=function(){}
 
 $(document).ready(function(){
+alert(whatTime());
 	whatMeal();
 	$('#add_pressure').click(function(){
 		var date_text = whatDate();
@@ -54,15 +55,18 @@ $(document).ready(function(){
 			var meal_text = $('#meal_input').val();}
 		else {
 			var meal_text = '';}
-		if ($('#before_after_input').val()!='None Selected'){
-			var before_after_text = $('#before_after_input').val();}
-		else {
+		if ($('#before_after_input').val()=='Before Eating'){
+			var before_after_text = 'Before';
+			$('#before_after_input').val('After Eating')}
+		else if ($('#before_after_input').val()=='After Eating'){
+			var before_after_text = 'After';}
+		else{
 			var before_after_text = '';}
-		alert(meal_text+before_after_text);
+		
 		
 		var reading_text = $('#reading_input').val();
 		$('#sugar_log').prepend(
-		'<tr><td class="date_sugar_col">'+date_text+'</td> <td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
+		'<tr><td class="date_sugar_col">'+date_text+'</td> <td>'+before_after_text+'</td><td>'+reading_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
 	});
 });
 </script>
