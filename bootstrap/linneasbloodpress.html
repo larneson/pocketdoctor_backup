@@ -35,6 +35,7 @@ var whatMeal = function(){
 	else if(hours>16){
 		$('#meal_input').val('Dinner');}
 }
+var makePressure=function(){}
 
 $(document).ready(function(){
 	whatMeal();
@@ -45,6 +46,23 @@ $(document).ready(function(){
 		var diastolic_text = $('#diastolic_input').val();
 		$('#pressure_log').prepend(
 		'<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col">'+systolic_text+' / '+diastolic_text+'</td><td class="time_pressure_col">'+time_text+'</td></tr>');
+	});
+	$('#add_sugar').click(function(){
+		var date_text = whatDate();
+		var time_text = whatTime();
+		if ($('#meal_input').val()!='None Selected'){
+			var meal_text = $('#meal_input').val();}
+		else {
+			var meal_text = '';}
+		if ($('#before_after_input').val()!='None Selected'){
+			var before_after_text = $('#before_after_input').val();}
+		else {
+			var before_after_text = '';}
+		alert(meal_text+before_after_text);
+		
+		var reading_text = $('#reading_input').val();
+		$('#sugar_log').prepend(
+		'<tr><td class="date_sugar_col">'+date_text+'</td> <td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
 	});
 });
 </script>
@@ -74,8 +92,8 @@ $(document).ready(function(){
 		</select>
 	<select id='before_after_input' class="form-control" >
   			<option>None Selected</option>
-  			<option>Before</option>
-  			<option>After</option>
+  			<option>Before Eating</option>
+  			<option>After Eating</option>
 		</select>
 	<input type='text' id='reading_input'/>
 	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
