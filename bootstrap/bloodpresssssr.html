@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Victoria</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+   <script src="http://code.jquery.com/jquery.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <style type='text/css'> body{padding:50px;}
+   /*makes buttons horizontal*/
+.med_class{display: inline;
+	list-style-type: none;
+	padding-right: 5px;}
+	/*makes buttons horizontal*/
+.med_classroom{display: inline;
+	list-style-type: none;
+	padding-right: 5px;}
+#blood_sugar_chart{padding:10px;background-color:#d3414a;color: #e11a1a;}#list{padding-bottom:10px}    
+#pressure_screen{padding:40px;background-color:#d3414a;color: ##e11a1a;}#list{padding-bottom:10px}  
+#systolic_input{padding:10px,padding-bottom:10px}
+#diastolic_input{padding:10px,padding-bottom:10px}  
+#date_input{padding:10px,padding-bottom:10px}
+   </style>
+<script>
+
+var makeMed=function(systolic_text,diastolic_text,date_text){
+$('#list').append('<div class="med_class"><div class="btn med_small"><span class="systolic_class"><label for="systolic">Systolic:</label>' + systolic_text + ' </br>Diastolic: ' + diastolic_text + '</br>Date: '+ date_text+ '</span><div class="delete_button icon-remove-sign"></div></div>         <div class="btn med_form"><div  class="input-group" action="todo.html"><label for="name">Systolic:</label><input type="text" name="systolic" class="systolic_update" value='+systolic_text+' placeholder="e.g. Tylenol" /><label for="diastolic">Diastolic:</label><input type="text" name="diastolic" class="diastolic_update" value="'+diastolic_text+'" placeholder="e.g. 200mg" /><label for="date">Date:</label><input type="date" name="date" class="date_update" value="'+date_text+'"/><input type="submit" value="Update" class="update_button"/></div></div></div>');
+$('.delete_button').click(function(){
+$(this).parents(".med_class").remove();
+if($('#list div').length==0){
+$("#no_tasks").show();}
+});
+$('.med_form').hide();
+$('.med_small').click(function(){
+$(this).hide();
+$(this).siblings('.med_form').show();
+});
+$('.update_button').click(function(){
+systolic_text=$(this).siblings('.systolic_update').val();
+diastolic_text=$(this).siblings('.diastolic_update').val();
+date_text=$(this).siblings('.date_update').val();
+
+$(this).parents(".med_class").find('systolic_class').val(systolic_text);//don't work
+$(this).parents('.med_form').hide();
+$(this).parents('.med_form').siblings('.med_small').show(); 
+});
+
+};
+
+$(document).ready(function(){
+
+$('.add_now_button').click(function(){
+var systolic_text=$('#systolic_input').val();
+var diastolic_text=$('#diastolic_input').val();
+var date_text=$('#date_input').val();
+if (systolic_text != ''){
+$("#no_tasks").hide();
+makeMed(systolic_text,diastolic_text,date_text);
+$('#systolic_input').val('');
+$('#diastolic_input').val('');
+$('#date_input').val('');
+}	
+
+});
+});
+</script>
+<script>
+
+var makeMeds=function(before_food_text,after_food_text,when_text){
+$('#list2').append('<div class="med_classroom"><div class="btn med_little"><span class="before_food_class"><label for="before_food">Before Food : </label>' + before_food_text + ' </br> After Food : ' + after_food_text + '</br>When : '+ when_text+ '</span><div class="delete_button icon-remove-sign"></div></div><div class="btn med_big"><div  class="input-group" action="todo.html"><label for="name">Before Food : </label><input type="text" name="before_food" class="before_food_update" value='+before_food_text+ ' placeholder="e.g. Tylenol" /><label for="after_food">After Food:</label><input type="text" name="after_food" class="after_food_update" value="'+after_food_text+ '" placeholder="e.g. 200mg" /><label for="when">When : </label><input type="when" name="when" class="when_update" value="'+when_text+ '"/><input type="submit" value="Update" class="update_button"/></div></div></div>');
+$('.delete_button').click(function(){
+$(this).parents(".med_classroom").remove();
+if($('#list2 div').length==0){
+$("#no_tasks").show();}
+});
+$('.med_big').hide();
+$('.med_little').click(function(){
+$(this).hide();
+$(this).siblings('.med_big').show();
+});
+$('.update_button').click(function(){
+before_food_text=$(this).siblings('.before_food_update').val();
+after_food_text=$(this).siblings('.after_food_update').val();
+when_text=$(this).siblings('.when_update').val();
+
+$(this).parents(".med_classroom").find('before_food_class').val(before_food_text);//don't work
+$(this).parents('.med_big').hide();
+$(this).parents('.med_big').siblings('.med_little').show(); 
+});
+
+};
+
+$(document).ready(function(){
+
+$('.add_this_now_button').click(function(){
+var before_food_text=$('#before_food_input').val();
+var after_food_text=$('#before_food_input').val();
+var when_text=$('#when_input').val();
+if (before_food_text != ''){
+$("#no_tasks2").hide();
+makeMeds(before_food_text,after_food_text,when_text);
+$('#before_food_input').val('');
+$('#after_food_input').val('');
+$('#when_input').val('');
+}	
+
+});
+});
+</script>
+
+</head>
+<body>
+<div>
+<h1>Blood Pressure</h1>
+</div>
+
+<h4>Log in your blood pressure below</h4>
+
+<div  class="ui-hide-label new_todo_item input-group" action='todo.html'>
+   	</br><label for="systolic">Systolic:&nbsp</label>
+   	<input type="systolic" name="systolic" id="systolic_input" value="" />
+   	</br><label for="diastolic">Diastolic:&nbsp</label>
+   	<input type="diastolic" name="diastolic" id="diastolic_input" value="" />
+   	</br><label for="date">Date:&nbsp</label>
+   	<input type="date" name="date" id="date_input" value="" />
+   	<input type='submit' value='Add' class="add_now_button"/>
+</div>	
+
+<div id=list class=hlist>
+<h4>These are your blood pressure logs. Click to edit.</h4>
+<span id='no_tasks'>You haven't entered any data yet!</span>
+
+</div>
+<!--<div id='pressure_screen' >
+<h1>My Pressure Data </h1>
+<h4>Check your blood pressure regularly.</h4>
+<h4>Make sure you closely monitor your pressure levels.</h4>
+</div>-->
+<div>
+<h1>Blood Sugar</h1>
+<div id = blood_sugar_chart>
+<img src = "http://bloodsugarlevelsnormal.com/wp-content/uploads/2013/07/Blood-Sugar-Chart.jpg" />
+</div>
+</div>
+
+<h4>Log in your blood sugar levels below</h4>
+
+<div  class="ui-hide-label new_todo_item input-group" action='todo.html'>
+   	</br><label for="before_food">Before Food:&nbsp</label>
+   	<input type="before_food" name="before_food" id="before_food_input" value="" />
+   	</br><label for="after_food">After Food:&nbsp</label>
+   	<input type="after_food" name="after_food" id="after_food_input" value="" />
+   	</br><label for="when">When:&nbsp</label>
+   	<input type="when" name="when" id="when_input" value="" />
+   	<input type='submit' value='Add' class="add_this_now_button"/>
+</div>	
+
+<div id=list2 class=hlist>
+<h4>These are your blood sugar logs. Click to edit.</h4>
+<span id=no_tasks2>You haven't entered any data yet!</span>
+
+</div>
+
+<div id=sugar_screen >
+<!--<h1>My Blood Sugar Data</h1>-->
+
+<!--<h4>Check your blood sugar regularly.</h4>
+<h4>Make sure you closely monitor your glucose levels.</h4>-->
+</div>
+</body>
+</html>

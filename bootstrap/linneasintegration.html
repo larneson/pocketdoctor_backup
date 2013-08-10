@@ -128,8 +128,12 @@
 	};
 	
 	$(document).ready(function(){
+		if ($(this).parents('.slide-panel').hasClass('left')){}
 		$('#more_options').hide();
 		$('.add_button').click(function(){
+			if ($(this).parents('.slide-panel').hasClass('left')){
+			console.log('yes');
+			}
 			var name_text=$('#name_input').val();
 			var dosage_text=$('#dosage_input').val();
 			var time_text=$('#time_input').val();
@@ -183,7 +187,7 @@
 
 		<h4>Enter your medications here</h4>
 		
-		<div  class="input-group" action='todo.html'>
+		<div  class="input-group" >
     	<label for="name">Name of drug:</label>
     	<input type="text" name="name" id="name_input" value="" placeholder="e.g. Tylenol" />
 </br>
@@ -204,7 +208,7 @@
 			<option>Red</option>
 		</select>
 	</div>
-   	<input type='submit' value='Add' class="btn btn-primary add_button"/>
+   	<input type='submit' value='Add' id='add_med' class="btn btn-primary add_button"/>
 	<input type='submit' value='More Options' class="btn more_button"/>
 		</div>	
 

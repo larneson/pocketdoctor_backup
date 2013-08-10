@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Linnea Blood Pressure</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <style type='text/css'> body{padding:50px;}
+  
+  </style>
+<script>
+var getToday = function(){
+	var d = new Date();
+	var month = d.getMonth()+1;
+	var day = d.getDate();
+	var output = month + '/' + day +'/' + d.getFullYear();
+	return output;
+}
+
+$(document).ready(function(){
+	$('#add_pressure').click(function(){
+	var date_text = getToday();
+	var systolic_text = $('#systolic_input').val();
+	var diastolic_text = $('#diastolic_input').val();
+		$('#pressure_log').prepend(
+		'<tr><td>'+date_text+'</td> <td>'+systolic_text+'/'+diastolic_text+'</td></tr>');
+	});
+});
+</script>
+</head>
+
+<body>
+<div  class="input-group" id='pressure_input'>
+<h3>Add Blood Pressure Data</h3>
+    	
+    	<input type="text"  id="systolic_input" value="" placeholder="Systolic " />
+    	&nbsp/&nbsp
+    	<input type="text" id="diastolic_input" value="" placeholder="Diastolic" />
+</br>
+	</div>
+   	<input type='submit' id='add_pressure' value='Add' class="btn btn-primary add_button"/>
+	
+		</div>	
+<table id='pressure_log' class='table'>
+	<h4>Blood Pressure</h4>
+</table>
+
+</body>
+</html>
