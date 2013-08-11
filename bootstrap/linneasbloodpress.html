@@ -10,12 +10,14 @@
   .time_pressure_col{width:15%}
   .pressure_input_style{width:30%;max-width:270px}
   .sugar_input_style{width:25%;min-width:130px;max-width:270px}
+  .delete_pressure_col{width:15px;}
   
   .date_sugar_col{width:15%}
   .time_sugar_col{width:10%}
   .meal_col{width:15%}
   .before_after_col{width:10%}
   #edit_pressure{float:right}
+  
   
   </style>
 <script>
@@ -52,7 +54,7 @@ var makePressure = function(){
 		var diastolic_text = $('#diastolic_input').val();
 		if (systolic_text !='' && diastolic_text !=''){
 			$('#edit_pressure').show();
-			$('#pressure_log').prepend('<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col"><span class="static_pressure">'+systolic_text+' / '+diastolic_text+'</span><span><input class="edit_pressure" type="text" value="'+systolic_text+' / '+diastolic_text+'"/> </span></td><td class="time_pressure_col">'+time_text+'</td><td></td></tr>');
+			$('#pressure_log').prepend('<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col"><span class="static_pressure">'+systolic_text+' / '+diastolic_text+'</span><span><input class="edit_pressure" type="text" value="'+systolic_text+' / '+diastolic_text+'"/> </span></td><td class="time_pressure_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
 			$('.edit_pressure').hide();
 			$('.static_pressure').show();
 			$('#edit_pressure').unbind('click').click(function(){
