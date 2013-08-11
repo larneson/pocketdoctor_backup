@@ -11,6 +11,7 @@
   .pressure_input_style{width:30%;max-width:270px}
   .sugar_input_style{width:25%;min-width:130px;max-width:270px}
   .delete_pressure_col{width:15px;}
+  .edit_pressure{width:90%;}
   
   .date_sugar_col{width:15%}
   .time_sugar_col{width:10%}
@@ -57,28 +58,34 @@ var makePressure = function(){
 			$('#pressure_log').prepend('<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col"><span class="static_pressure">'+systolic_text+' / '+diastolic_text+'</span><span><input class="edit_pressure" type="text" value="'+systolic_text+' / '+diastolic_text+'"/> </span></td><td class="time_pressure_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
 			$('.edit_pressure').hide();
 			$('.static_pressure').show();
+			$('#edit_pressure').val('Edit');
 			$('#edit_pressure').unbind('click').click(function(){
 				if ($('#edit_pressure').val()=='Edit'){
 					$('#edit_pressure').val('Done');
 					$('.pressure_col').each(function(){
-						$(this).find('.static_pressure').toggle();
-						$(this).find('.edit_pressure').toggle();
+						$(this).find('.static_pressure').hide();
+						$(this).find('.edit_pressure').show();
 					});
 				}
 				else if($('#edit_pressure').val()=='Done'){
 					$('#edit_pressure').val('Edit');
 					$('.pressure_col').each(function(){
-						$(this).find('.static_pressure').toggle();
-						$(this).find('.edit_pressure').toggle();
+						$(this).find('.static_pressure').show();
+						$(this).find('.edit_pressure').hide();
 						$(this).find('.static_pressure').text( $(this).find('.edit_pressure').val());
 					});
 				 }
-				$('#systolic_input').val('');
-				$('#diastolic_input').val('');
 			});
-		
-		
-		
+		$('.icon-remove').unbind('click').click(function(){
+			if(confirm('Are you sure you want to delete this row?')){
+				$(this).parents('tr').remove();
+				if($('#pressure_log').length==1){
+					$('#edit_pressure').hide();
+				}
+			}
+		});
+		$('#systolic_input').val('');
+		$('#diastolic_input').val('');
 		}
 	});
 }
@@ -158,7 +165,6 @@ $(document).ready(function(){
 	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
 
 </div>
-
 <table id='sugar_log' class='table'>
 	<h4>Blood Sugar</h4>
 </table>
