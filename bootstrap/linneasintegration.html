@@ -24,6 +24,7 @@
 	/* font size on the front panel */
 	.navbar{font-size: 70px;min-height:40px;
 	}
+	#says_my_logs{padding:20px}
 	html{height:100%}
 	#my_pills{padding:30px;background-color:#a3dae5;color: #005a97;width:auto;min-height:100%;}
      #list{padding-bottom:10px}
@@ -41,11 +42,15 @@
      .med_form{margin:5px;}
      .size_toggle{float:right;}
 /*pressure/sugar ones*/
+#pressure_style{padding:20px;background-color:#ccffcc;color:#003300}
+#sugar_style{padding:20px;background-color:#ff6666;color:#552222}
+#sugar_log{background-color:#fee}
+#pressure_log{background:#f0fff0}
 
 #pressure_input{padding:20px;background-color:#ccffcc;color:#003300}
 #sugar_input{padding:20px;background-color:#ff6666;color:#552222}
 
-#right_style{padding:20px;background-color:#fff;color: #000;}
+#right_style{background-color:#fff;color: #000;}
      .date_pressure_col{width:25%}
   .time_pressure_col{width:15%}
   .pressure_input_style{width:30%;max-width:270px}
@@ -452,16 +457,21 @@ var colorPill=function(color_text){
   <div id="panel-right" class="span5 slide-panel right">
     <div class="contain" id='right_style' >
 	<!-- stuff here-->
+	<h1 id='says_my_logs'>My Logs</h1>
 	
-
-<table id='pressure_log' class='table'>
-	<h4>Blood Pressure Log<input type='button' id='edit_pressure' value='Edit' class="btn btn-info btn-inline btn-small"/></h4>
+<div class='widget' id='pressure_style'>
+<h4>Blood Pressure Log<input type='button' id='edit_pressure' value='Edit' class="btn btn-info btn-inline btn-small"/><i id='minimize_sugar' class="size_toggle icon-minus-sign"></i><i id='maximize_sugar' class='size_toggle icon-plus-sign'></i></h4>
+<table id='pressure_log' class='table max_class'>
+	
 </table>
+</div>
 
-
-<table id='sugar_log' class='table'>
-	<h4>Blood Sugar Log<input type='button' id='edit_sugar' value='Edit' class="btn btn-info btn-inline btn-small"/></h4>
+<div class='widget' id='sugar_style'>
+<h4>Blood Sugar Log<input type='button' id='edit_sugar' value='Edit' class="btn btn-info btn-inline btn-small"/><i id='minimize_sugar' class="size_toggle icon-minus-sign"></i><i id='maximize_sugar' class='size_toggle icon-plus-sign'></i></h4>
+<table id='sugar_log' class='table max_class'>
+	
 </table>
+</div>
 
 	
 	
