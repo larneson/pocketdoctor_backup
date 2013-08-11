@@ -18,6 +18,7 @@
   .meal_col{width:15%}
   .before_after_col{width:10%}
   #edit_pressure{float:right}
+  #edit_sugar{float:right}
   
   
   </style>
@@ -89,11 +90,11 @@ var makePressure = function(){
 		}
 	});
 }
-
 var makeSugar=function(){
 $('#add_sugar').click(function(){
 	var reading_text = $('#reading_input').val();
 	if (reading_text !=''){
+		$('#edit_sugar').show();
 		var date_text = whatDate();
 		var time_text = whatTime();
 		if ($('#meal_input').val()!='None Selected'){
@@ -115,28 +116,56 @@ $('#add_sugar').click(function(){
 		$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan')!=2){
 			$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan','2');
 			$('#sugar_log tr').first().find('.meal_col').attr('rowspan','2');
-			$('tr').first().after('<tr><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td><td class="delete_sugar_col"><i class="icon-remove"></i></td></tr>');
+			$('#sugar_log tr').first().after('<tr class="short_row"><td class="before_after_col">'+before_after_text+'</td><td class="reading_col"><span class="static_sugar">'+reading_text+'</span><input type="text" value="'+reading_text+'" class="editable_sugar"/></td><td class="time_sugar_col">'+time_text+'</td><td class="delete_sugar_col"><i class="icon-remove"></i></td></tr>');
 			
 			}
 		else{
-			$('#sugar_log').prepend('<tr> <td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
+			$('#sugar_log').prepend('<tr> <td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td><td class="before_after_col">'+before_after_text+'</td><td class="reading_col"><span class="static_sugar">'+reading_text+'</span><input type="text" value="'+reading_text+'" class="editable_sugar"/></td><td class="time_sugar_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
 		}
 		$('.icon-remove').unbind('click').click(function(){
 			if(confirm('Are you sure you want to delete this row?')){
+				
+				$(this).parents('tr').prev().find('.date_sugar_col').attr('rowspan','1');
+				$(this).parents('tr').prev().find('.meal_col').attr('rowspan','1');
+				
+				var date_text=$(this).parents('tr').find('.date_sugar_col').text();
+				var meal_text=$(this).parents('tr').find('.meal_col').text();
+				$(this).parents('tr').next('.short_row').prepend('<td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td>');
+				$(this).parents('tr').next('.short_row').removeClass('short_row');
+				
 				$(this).parents('tr').remove();
-				$(this).parents('tr').prev().find( '.date_sugar_col').removeAttr('rowspan');
-				$(this).parents('tr').prev().find('.meal_col').attr('rowspan','2')
 				//if($('#pressure_log').length==1){
 					//$('#edit_pressure').hide();
+					//$('#no_sugar').show();
 				//}
 			}
 		});
+		$('#edit_sugar').unbind('click').click(function(){
+				if ($('#edit_sugar').val()=='Edit'){
+					$('#edit_sugar').val('Done');
+					$('.reading_col').each(function(){
+						$(this).find('.static_sugar').hide();
+						$(this).find('.editable_sugar').show();
+					});
+				}
+				else if($('#edit_sugar').val()=='Done'){
+					$('#edit_sugar').val('Edit');
+					$('.reading_col').each(function(){
+						$(this).find('.static_sugar').show();
+						$(this).find('.editable_sugar').hide();
+						$(this).find('.static_sugar').text( $(this).find('.editable_sugar').val());
+					});
+				 }
+		});
+		$('.editable_sugar').hide();
+		$('#reading_input').val('');
 	}
 	});
 }
 
 $(document).ready(function(){
 	$('#edit_pressure').hide();
+	$('#edit_sugar').hide();
 	whatMeal();
 	makePressure();
 	makeSugar();
@@ -176,7 +205,7 @@ $(document).ready(function(){
 
 </div>
 <table id='sugar_log' class='table'>
-	<h4>Blood Sugar</h4>
+	<h4>Blood Sugar<input type='button' id='edit_sugar' value='Edit' class="btn btn-info btn-inline btn-small"/></h4>
 </table>
 
 </body>

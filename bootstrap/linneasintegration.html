@@ -39,28 +39,161 @@
      .pill{margin:3px;}
      .med_small{margin-bottom:5px;}
      .med_form{margin:5px;}
+/*pressure/sugar ones*/
+     .date_pressure_col{width:25%}
+  .time_pressure_col{width:15%}
+  .pressure_input_style{width:30%;max-width:270px}
+  .sugar_input_style{width:25%;min-width:130px;max-width:270px}
+  .delete_pressure_col{width:15px;}
+  .edit_pressure{width:90%;}
+  
+  .date_sugar_col{width:15%}
+  .time_sugar_col{width:10%}
+  .meal_col{width:15%}
+  .before_after_col{width:10%}
+  #edit_pressure{float:right}
+  #edit_sugar{float:right}
 </style>
 <script>
-	
-
-
-	var colorPill=function(color_text){
-		$('.pill').each(function(){	
-			if ($(this).find('.name_class').text() == $('#name_input').val()){
-				if (color_text == 'Blue'){
-					$(this).find('.btn').addClass('btn-primary');}
-				else if (color_text == 'Green'){
-					$(this).find('.btn').addClass('btn-success');}
-				else if (color_text == 'Teal'){
-					$(this).find('.btn').addClass('btn-info');}
-				else if (color_text == 'Orange'){
-					$(this).find('.btn').addClass('btn-warning');}
-				else if (color_text == 'Red'){
-					$(this).find('.btn').addClass('btn-danger');}
-				};
-});
-
-	};
+var whatDate = function(){
+	var d = new Date();
+	var month = d.getMonth()+1;
+	var day = d.getDate();
+	var output = month + '/' + day +'/' + d.getFullYear();
+	return output;
+}
+var whatTime = function(){
+	var d = new Date();
+	var hours = d.getHours();
+	var minutes = d.getMinutes();
+	if (minutes<10){minutes='0'+minutes}
+	var output = hours + ':' + minutes;
+	return output;
+}
+var whatMeal = function(){
+	var d = new Date();
+	var hours = d.getHours();
+	if (hours<=11){
+		$('#meal_input').val('Breakfast');}
+	else if (hours>11&&hours<=16){
+		$('#meal_input').val('Lunch');}
+	else if(hours>16){
+		$('#meal_input').val('Dinner');}
+}
+var makePressure = function(){
+	$('#add_pressure').click(function(){
+		var date_text = whatDate();
+		var time_text = whatTime();
+		var systolic_text = $('#systolic_input').val();
+		var diastolic_text = $('#diastolic_input').val();
+		if (systolic_text !='' && diastolic_text !=''){
+			$('#edit_pressure').show();
+			$('#pressure_log').prepend('<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col"><span class="static_pressure">'+systolic_text+' / '+diastolic_text+'</span><span><input class="edit_pressure" type="text" value="'+systolic_text+' / '+diastolic_text+'"/> </span></td><td class="time_pressure_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
+			$('.edit_pressure').hide();
+			$('.static_pressure').show();
+			$('#edit_pressure').val('Edit');
+			$('#edit_pressure').unbind('click').click(function(){
+				if ($('#edit_pressure').val()=='Edit'){
+					$('#edit_pressure').val('Done');
+					$('.pressure_col').each(function(){
+						$(this).find('.static_pressure').hide();
+						$(this).find('.edit_pressure').show();
+					});
+				}
+				else if($('#edit_pressure').val()=='Done'){
+					$('#edit_pressure').val('Edit');
+					$('.pressure_col').each(function(){
+						$(this).find('.static_pressure').show();
+						$(this).find('.edit_pressure').hide();
+						$(this).find('.static_pressure').text( $(this).find('.edit_pressure').val());
+					});
+				 }
+			});
+		$('.icon-remove').unbind('click').click(function(){
+			if(confirm('Are you sure you want to delete this row?')){
+				$(this).parents('tr').remove();
+				if($('#pressure_log').length==1){
+					$('#edit_pressure').hide();
+				}
+			}
+		});
+		$('#systolic_input').val('');
+		$('#diastolic_input').val('');
+		}
+	});
+}
+var makeSugar=function(){
+$('#add_sugar').click(function(){
+	var reading_text = $('#reading_input').val();
+	if (reading_text !=''){
+		$('#edit_sugar').show();
+		var date_text = whatDate();
+		var time_text = whatTime();
+		if ($('#meal_input').val()!='None Selected'){
+			var meal_text = $('#meal_input').val();}
+		else {
+			var meal_text = '';}
+		if ($('#before_after_input').val()=='Before Eating'){
+			var before_after_text = 'Before';
+			$('#before_after_input').val('After Eating')}
+		else if ($('#before_after_input').val()=='After Eating'){
+			var before_after_text = 'After';}
+		else{
+			var before_after_text = '';}
+		//setting before/after meal things
+		if($('#sugar_log tr').first().find('.before_after_col').text()=='Before' &&
+		$('#sugar_log tr').first().find('.date_sugar_col').text()==date_text &&
+		$('#sugar_log tr').first().find('.meal_col').text()==meal_text &&
+		before_after_text == 'After' &&
+		$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan')!=2){
+			$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan','2');
+			$('#sugar_log tr').first().find('.meal_col').attr('rowspan','2');
+			$('#sugar_log tr').first().after('<tr class="short_row"><td class="before_after_col">'+before_after_text+'</td><td class="reading_col"><span class="static_sugar">'+reading_text+'</span><input type="text" value="'+reading_text+'" class="editable_sugar"/></td><td class="time_sugar_col">'+time_text+'</td><td class="delete_sugar_col"><i class="icon-remove"></i></td></tr>');
+			
+			}
+		else{
+			$('#sugar_log').prepend('<tr> <td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td><td class="before_after_col">'+before_after_text+'</td><td class="reading_col"><span class="static_sugar">'+reading_text+'</span><input type="text" value="'+reading_text+'" class="editable_sugar"/></td><td class="time_sugar_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
+		}
+		$('.icon-remove').unbind('click').click(function(){
+			if(confirm('Are you sure you want to delete this row?')){
+				
+				$(this).parents('tr').prev().find('.date_sugar_col').attr('rowspan','1');
+				$(this).parents('tr').prev().find('.meal_col').attr('rowspan','1');
+				
+				var date_text=$(this).parents('tr').find('.date_sugar_col').text();
+				var meal_text=$(this).parents('tr').find('.meal_col').text();
+				$(this).parents('tr').next('.short_row').prepend('<td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td>');
+				$(this).parents('tr').next('.short_row').removeClass('short_row');
+				
+				$(this).parents('tr').remove();
+				//if($('#pressure_log').length==1){
+					//$('#edit_pressure').hide();
+					//$('#no_sugar').show();
+				//}
+			}
+		});
+		$('#edit_sugar').unbind('click').click(function(){
+				if ($('#edit_sugar').val()=='Edit'){
+					$('#edit_sugar').val('Done');
+					$('.reading_col').each(function(){
+						$(this).find('.static_sugar').hide();
+						$(this).find('.editable_sugar').show();
+					});
+				}
+				else if($('#edit_sugar').val()=='Done'){
+					$('#edit_sugar').val('Edit');
+					$('.reading_col').each(function(){
+						$(this).find('.static_sugar').show();
+						$(this).find('.editable_sugar').hide();
+						$(this).find('.static_sugar').text( $(this).find('.editable_sugar').val());
+					});
+				 }
+		});
+		$('.editable_sugar').hide();
+		$('#reading_input').val('');
+	}
+	});
+}
 
 var makeMed=function(){
 	$('#add_med').click(function(){
@@ -72,20 +205,19 @@ var makeMed=function(){
 		var time_text=$('#time_input').val();
 		var color_text =$('#color_input').val();
 		if (name_text != ''){
-					$("#no_tasks").hide();
-					makePill(name_text,dosage_text,time_text);
-					colorPill(color_text);
-		$('#name_input').val('');
-		$('#dosage_input').val('');
-		$('#time_input').val('');
-		$('#color_input').val('Gray');
+				$("#no_tasks").hide();
+				makePill(name_text,dosage_text,time_text);
+				colorPill(color_text);
+				$('#name_input').val('');
+				$('#dosage_input').val('');
+				$('#time_input').val('');
+				$('#color_input').val('Gray');
 
-		$('#more_options').hide();
-}	
-
+				$('#more_options').hide();
+		}	
+	});
 }
-	
-	var makePill=function(name_text,dosage_text,time_text){
+var makePill=function(name_text,dosage_text,time_text){
 		$('#list').append('<div class="med_class"><div class="btn med_small"><span class="name_class">'+name_text + '</span></br> Dosage: <span class="dosage_class">' + dosage_text + '</span></br>Time: <span class="time_class">'+ time_text+ '</span></div>         <div class="btn med_form"><div  class="input-group" action="todo.html"><label for="name">Name of drug:</label><input type="text" name="name" class="name_update" value="'+name_text+'" placeholder="e.g. Tylenol" /><label for="dosage">Dosage:</label><input type="text" name="dosage" class="dosage_update" value="'+dosage_text+'" placeholder="e.g. 200mg" /><label for="time">Time:</label><input type="time" name="time" class="time_update" value="'+time_text+'"/></br><input type="submit" value="Update" class="btn btn-primary update_button"/><input type="submit" value="Cancel" class="btn cancel_button"/><input type="submit" value="Delete" class="btn delete_button"/></div></div></div>');
 		$('#pill_screen').append('<div class="btn-group pill"><button class="btn  when_taken"><span class= "name_class">'+name_text+'</span> </button><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button><ul class="dropdown-menu"><li><a>Dosage: <span class="dosage_class">'+dosage_text+'</span></a></li><li><a>Time: <span class="time_class">'+time_text+'</span></a></li></ul></div>');
 	
@@ -121,15 +253,17 @@ var makeMed=function(){
 		
 		$('.delete_button').click(function(){
 			var old_name = $(this).parents(".med_class").find('.name_class').text();
+			if(confirm('Are you sure you want to delete '+old_name+'?')){
 				$('.pill').each(function(){	
 					if ($(this).find('.name_class').text() == old_name){
 						$(this).remove();
-				};
-			});
+					};
+				});
 				$(this).parents(".med_class").remove();
 				if($('#list div').length==0){
 					$("#no_tasks").show();}
-						});
+			}
+		});
 		$('.cancel_button').click(function(){
 			 //note to self: fix so that when you click again the text inside changes back
 			 
@@ -149,17 +283,37 @@ var makeMed=function(){
 		});
 		
 	};
+var colorPill=function(color_text){
+		$('.pill').each(function(){	
+			if ($(this).find('.name_class').text() == $('#name_input').val()){
+				if (color_text == 'Blue'){
+					$(this).find('.btn').addClass('btn-primary');}
+				else if (color_text == 'Green'){
+					$(this).find('.btn').addClass('btn-success');}
+				else if (color_text == 'Teal'){
+					$(this).find('.btn').addClass('btn-info');}
+				else if (color_text == 'Orange'){
+					$(this).find('.btn').addClass('btn-warning');}
+				else if (color_text == 'Red'){
+					$(this).find('.btn').addClass('btn-danger');}
+				};
+});
+
+	};
 	
 	$(document).ready(function(){
-		if ($(this).parents('.slide-panel').hasClass('left')){}
+		//if ($(this).parents('.slide-panel').hasClass('left')){}
 		$('#more_options').hide();
 		makeMed();
-			
-		});
 		$('.more_button').click(function(){
 			$('#more_options').show();
 		});
-	});
+		$('#edit_pressure').hide();
+		$('#edit_sugar').hide();
+		whatMeal();
+		makePressure();
+		makeSugar();
+	})
 	</script>
 </head>
 <body>
@@ -250,7 +404,47 @@ var makeMed=function(){
   <div id="panel-right" class="span5 slide-panel right">
     <div class="contain" id='right_style' >
 	<!-- stuff here-->
-	yolo
+	
+<div  class="input-group" id='pressure_input'>
+<h3>Add Blood Pressure Data</h3>
+    	
+    	<input type="text"  id="systolic_input" value="" placeholder="Systolic " class='pressure_input_style'/>
+    	&nbsp/&nbsp
+    	<input type="text" id="diastolic_input" value="" placeholder="Diastolic" class='pressure_input_style'/>
+   		<input type='submit' id='add_pressure' value='Add' class="btn btn-primary add_button"/>
+	
+		</div>	
+<table id='pressure_log' class='table'>
+	<h4>Blood Pressure<input type='button' id='edit_pressure' value='Edit' class="btn btn-info btn-inline btn-small"/></h4>
+</table>
+
+<div id='sugar_input'>
+<h3>Add Blood Sugar Data</h3>
+	<select id='meal_input' class="form-control sugar_input_style">
+  			<option>None Selected</option>
+  			<option>Breakfast</option>
+  			<option>Lunch</option>
+  			<option>Dinner</option>
+		</select>
+	<select id='before_after_input' class="form-control sugar_input_style" >
+  			<option>None Selected</option>
+  			<option>Before Eating</option>
+  			<option>After Eating</option>
+		</select>
+	<input type='text' id='reading_input' placeholder='Blood Sugar Level' class='sugar_input_style'/>
+	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
+
+</div>
+<table id='sugar_log' class='table'>
+	<h4>Blood Sugar<input type='button' id='edit_sugar' value='Edit' class="btn btn-info btn-inline btn-small"/></h4>
+</table>
+
+	
+	
+	
+	
+	
+	
     </div>
   </div>
 <!-- end of right panel -->
