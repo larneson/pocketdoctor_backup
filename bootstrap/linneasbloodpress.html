@@ -9,6 +9,12 @@
   .date_pressure_col{width:25%}
   .time_pressure_col{width:15%}
   
+  .date_sugar_col{width:15%}
+  .time_sugar_col{width:10%}
+  .meal_col{width:15%}
+  .before_after_col{width:10%}
+  #edit_pressure{float:right}
+  
   </style>
 <script>
 var whatDate = function(){
@@ -36,6 +42,44 @@ var whatMeal = function(){
 	else if(hours>16){
 		$('#meal_input').val('Dinner');}
 }
+var makePressure = function(){
+	$('#add_pressure').click(function(){
+		var date_text = whatDate();
+		var time_text = whatTime();
+		var systolic_text = $('#systolic_input').val();
+		var diastolic_text = $('#diastolic_input').val();
+		if (systolic_text !='' && diastolic_text !=''){
+			
+			$('#pressure_log').prepend('<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col"><span class="static_pressure">'+systolic_text+' / '+diastolic_text+'</span><span><input class="edit_pressure" type="text" value="'+systolic_text+' / '+diastolic_text+'"/> </span></td><td class="time_pressure_col">'+time_text+'</td><td></td></tr>');
+			$('.edit_pressure').hide();
+			$('.static_pressure').show();
+			$('#edit_pressure').unbind('click').click(function(){
+				if ($('#edit_pressure').val()=='Edit'){
+					$('#edit_pressure').val('Done');
+					$('.pressure_col').each(function(){
+						$(this).find('.static_pressure').toggle();
+						$(this).find('.edit_pressure').toggle();
+						$(this).find('.static_pressure').val( $(this).find('.edit_pressure').val());
+					});
+				}
+				else if($('#edit_pressure').val()=='Edit'){
+					$('#edit_pressure').val('Edit');
+					$('.pressure_col').each(function(){
+						$(this).find('.static_pressure').toggle();
+						$(this).find('.edit_pressure').toggle();
+						$(this).find('.static_pressure').val( $(this).find('.edit_pressure').val());
+					});
+				}
+				$('#systolic_input').val('');
+				$('#diastolic_input').val('');
+			});
+		
+		
+		
+		}
+	});
+}
+
 var makeSugar=function(){
 $('#add_sugar').click(function(){
 	var reading_text = $('#reading_input').val();
@@ -53,6 +97,7 @@ $('#add_sugar').click(function(){
 			var before_after_text = 'After';}
 		else{
 			var before_after_text = '';}
+		//setting before/after meal things
 		if($('#sugar_log tr').first().find('.before_after_col').text()=='Before' &&
 		$('#sugar_log tr').first().find('.date_sugar_col').text()==date_text &&
 		$('#sugar_log tr').first().find('.meal_col').text()==meal_text &&
@@ -72,15 +117,7 @@ $('#add_sugar').click(function(){
 
 $(document).ready(function(){
 	whatMeal();
-	$('#add_pressure').click(function(){
-		var date_text = whatDate();
-		var time_text = whatTime();
-		var systolic_text = $('#systolic_input').val();
-		var diastolic_text = $('#diastolic_input').val();
-		$('#pressure_log').prepend(
-		'<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col">'+systolic_text+' / '+diastolic_text+'</td><td class="time_pressure_col">'+time_text+'</td><td><input type="text"/></td></tr>');
-		
-	});
+	makePressure();
 	makeSugar();
 });
 </script>
@@ -97,12 +134,12 @@ $(document).ready(function(){
 	
 		</div>	
 <table id='pressure_log' class='table'>
-	<h4>Blood Pressure</h4>
+	<h4>Blood Pressure<input type='button' id='edit_pressure' value='Edit' class="btn btn-info btn-inline btn-small"/></h4>
 </table>
 
 <div id='sugar_input'>
 <h3>Add Blood Sugar Data</h3>
-	<select id='meal_input' class="form-control" value=''>
+	<select id='meal_input' class="form-control">
   			<option>None Selected</option>
   			<option>Breakfast</option>
   			<option>Lunch</option>
@@ -113,7 +150,7 @@ $(document).ready(function(){
   			<option>Before Eating</option>
   			<option>After Eating</option>
 		</select>
-	<input type='text' id='reading_input'/>
+	<input type='text' id='reading_input' placeholder='Blood Sugar Level'/>
 	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
 
 </div>
