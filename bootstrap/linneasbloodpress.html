@@ -8,6 +8,8 @@
   <style type='text/css'> body{padding:50px;}
   .date_pressure_col{width:25%}
   .time_pressure_col{width:15%}
+  .pressure_input_style{width:30%;max-width:270px}
+  .sugar_input_style{width:25%;min-width:130px;max-width:270px}
   
   .date_sugar_col{width:15%}
   .time_sugar_col{width:10%}
@@ -49,7 +51,7 @@ var makePressure = function(){
 		var systolic_text = $('#systolic_input').val();
 		var diastolic_text = $('#diastolic_input').val();
 		if (systolic_text !='' && diastolic_text !=''){
-			
+			$('#edit_pressure').show();
 			$('#pressure_log').prepend('<tr><td class="date_pressure_col">'+date_text+'</td> <td class="pressure_col"><span class="static_pressure">'+systolic_text+' / '+diastolic_text+'</span><span><input class="edit_pressure" type="text" value="'+systolic_text+' / '+diastolic_text+'"/> </span></td><td class="time_pressure_col">'+time_text+'</td><td></td></tr>');
 			$('.edit_pressure').hide();
 			$('.static_pressure').show();
@@ -59,17 +61,16 @@ var makePressure = function(){
 					$('.pressure_col').each(function(){
 						$(this).find('.static_pressure').toggle();
 						$(this).find('.edit_pressure').toggle();
-						$(this).find('.static_pressure').val( $(this).find('.edit_pressure').val());
 					});
 				}
-				else if($('#edit_pressure').val()=='Edit'){
+				else if($('#edit_pressure').val()=='Done'){
 					$('#edit_pressure').val('Edit');
 					$('.pressure_col').each(function(){
 						$(this).find('.static_pressure').toggle();
 						$(this).find('.edit_pressure').toggle();
-						$(this).find('.static_pressure').val( $(this).find('.edit_pressure').val());
+						$(this).find('.static_pressure').text( $(this).find('.edit_pressure').val());
 					});
-				}
+				 }
 				$('#systolic_input').val('');
 				$('#diastolic_input').val('');
 			});
@@ -116,6 +117,7 @@ $('#add_sugar').click(function(){
 }
 
 $(document).ready(function(){
+	$('#edit_pressure').hide();
 	whatMeal();
 	makePressure();
 	makeSugar();
@@ -127,9 +129,9 @@ $(document).ready(function(){
 <div  class="input-group" id='pressure_input'>
 <h3>Add Blood Pressure Data</h3>
     	
-    	<input type="text"  id="systolic_input" value="" placeholder="Systolic " />
+    	<input type="text"  id="systolic_input" value="" placeholder="Systolic " class='pressure_input_style'/>
     	&nbsp/&nbsp
-    	<input type="text" id="diastolic_input" value="" placeholder="Diastolic" />
+    	<input type="text" id="diastolic_input" value="" placeholder="Diastolic" class='pressure_input_style'/>
    		<input type='submit' id='add_pressure' value='Add' class="btn btn-primary add_button"/>
 	
 		</div>	
@@ -139,18 +141,18 @@ $(document).ready(function(){
 
 <div id='sugar_input'>
 <h3>Add Blood Sugar Data</h3>
-	<select id='meal_input' class="form-control">
+	<select id='meal_input' class="form-control sugar_input_style">
   			<option>None Selected</option>
   			<option>Breakfast</option>
   			<option>Lunch</option>
   			<option>Dinner</option>
 		</select>
-	<select id='before_after_input' class="form-control" >
+	<select id='before_after_input' class="form-control sugar_input_style" >
   			<option>None Selected</option>
   			<option>Before Eating</option>
   			<option>After Eating</option>
 		</select>
-	<input type='text' id='reading_input' placeholder='Blood Sugar Level'/>
+	<input type='text' id='reading_input' placeholder='Blood Sugar Level' class='sugar_input_style'/>
 	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
 
 </div>
