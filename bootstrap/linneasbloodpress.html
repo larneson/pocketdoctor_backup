@@ -115,12 +115,22 @@ $('#add_sugar').click(function(){
 		$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan')!=2){
 			$('#sugar_log tr').first().find('.date_sugar_col').attr('rowspan','2');
 			$('#sugar_log tr').first().find('.meal_col').attr('rowspan','2');
-			$('tr').first().after('<tr><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
+			$('tr').first().after('<tr><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td><td class="delete_sugar_col"><i class="icon-remove"></i></td></tr>');
 			
 			}
 		else{
-			$('#sugar_log').prepend('<tr> <td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td></tr>');
+			$('#sugar_log').prepend('<tr> <td class="date_sugar_col">'+ date_text+'</td> <td class="meal_col">'+meal_text+'</td><td class="before_after_col">'+before_after_text+'</td><td class="reading_col">'+reading_text+'</td><td class="time_sugar_col">'+time_text+'</td><td class="delete_pressure_col"><i class="icon-remove"></i></td></tr>');
 		}
+		$('.icon-remove').unbind('click').click(function(){
+			if(confirm('Are you sure you want to delete this row?')){
+				$(this).parents('tr').remove();
+				$(this).parents('tr').prev().find( '.date_sugar_col').removeAttr('rowspan');
+				$(this).parents('tr').prev().find('.meal_col').attr('rowspan','2')
+				//if($('#pressure_log').length==1){
+					//$('#edit_pressure').hide();
+				//}
+			}
+		});
 	}
 	});
 }
