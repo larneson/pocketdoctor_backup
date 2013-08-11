@@ -28,7 +28,7 @@
 	#my_pills{padding:30px;background-color:#a3dae5;color: #005a97;width:auto;min-height:100%;}
      #list{padding-bottom:10px}
      #pill_screen{padding:10px;background-color:#fff;width:80%;margin-left: auto; margin-right: auto;color:#666;text-align:center;}
-     #pill_bottle{padding:10px; height: auto; min-height:200px; background-color:#ff9900;width:70%;margin-left: auto; margin-right: auto; overflow:scroll;color:#444;text-align:center;}
+     #pill_bottle{padding:10px; height: auto; min-height:250px; background-color:#ff9900;width:70%;margin-left: auto; margin-right: auto; overflow:scroll;color:#444;text-align:center;}
      #center_style{width: auto; height: auto; color:#000;}
      #left_style{padding:20px;background-color: #eee;color:#101060;}
      
@@ -39,6 +39,7 @@
      .pill{margin:3px;}
      .med_small{margin-bottom:5px;}
      .med_form{margin:5px;}
+     .size_toggle{float:right;}
 /*pressure/sugar ones*/
 
 #pressure_input{padding:20px;background-color:#ccffcc;color:#003300}
@@ -320,6 +321,13 @@ var colorPill=function(color_text){
 		whatMeal();
 		makePressure();
 		makeSugar();
+		$('.icon-plus-sign').hide();
+		$('.icon-minus-sign').show();
+		$('.size_toggle').click(function(){
+			$('#max_my_pills').toggle();
+			$(this).toggle();
+			$(this).siblings('.size_toggle').toggle();
+		});
 	})
 	</script>
 </head>
@@ -394,8 +402,8 @@ var colorPill=function(color_text){
 
 	<!-- stuff here!-->
 	<div id='my_pills' >
-		<h1 id='says_pill_bottle'>Pill Bottle </h1>
-		
+		<h1 id='says_pill_bottle'>Pill Bottle <i id='minimize_pills' class="size_toggle icon-minus-sign"></i><i id='maximize_pills' class='size_toggle icon-plus-sign'></i></h1>
+		<span id='max_my_pills'>
 		<h4>Click on pills to move them into the bottle.</h4>
 		<div id='pill_screen' class='which_pill'>
 			<h4>These are the pills you haven't taken.</h4>
@@ -403,6 +411,7 @@ var colorPill=function(color_text){
 		<div id='pill_bottle' class="which_pill">
 			<h4>These are the pills you've already taken.</h4>
 		</div>
+		</span>
 	</div>
 	<div  class="input-group" id='pressure_input'>
 <h2>Blood Pressure</h2>
