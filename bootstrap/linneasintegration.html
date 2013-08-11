@@ -323,8 +323,11 @@ var colorPill=function(color_text){
 		makeSugar();
 		$('.icon-plus-sign').hide();
 		$('.icon-minus-sign').show();
-		$('.size_toggle').click(function(){
-			$('#max_my_pills').toggle();
+		$('.size_toggle').unbind('click').click(function(){
+			$(this).parents('.widget').find('.max_class').toggle();
+			console.log($(this).parents('.widget'))
+			console.log($(this).parents('.widget').find('.max_class'));
+			//min/max buttons
 			$(this).toggle();
 			$(this).siblings('.size_toggle').toggle();
 		});
@@ -401,9 +404,9 @@ var colorPill=function(color_text){
   
 
 	<!-- stuff here!-->
-	<div id='my_pills' >
+	<div id='my_pills' class='widget'>
 		<h1 id='says_pill_bottle'>Pill Bottle <i id='minimize_pills' class="size_toggle icon-minus-sign"></i><i id='maximize_pills' class='size_toggle icon-plus-sign'></i></h1>
-		<span id='max_my_pills'>
+		<span id='max_my_pills' class='max_class'>
 		<h4>Click on pills to move them into the bottle.</h4>
 		<div id='pill_screen' class='which_pill'>
 			<h4>These are the pills you haven't taken.</h4>
@@ -413,17 +416,20 @@ var colorPill=function(color_text){
 		</div>
 		</span>
 	</div>
-	<div  class="input-group" id='pressure_input'>
-<h2>Blood Pressure</h2>
-    	
+	
+	<div  class="widget" id='pressure_input'>
+<h2>Blood Pressure<i id='minimize_pressure' class="size_toggle icon-minus-sign"></i><i id='maximize_pressure' class='size_toggle icon-plus-sign'></i></h2>
+    <span class='max_class'>
     	<input type="text"  id="systolic_input" value="" placeholder="Systolic " class='pressure_input_style'/>
     	&nbsp/&nbsp
     	<input type="text" id="diastolic_input" value="" placeholder="Diastolic" class='pressure_input_style'/>
    		<input type='submit' id='add_pressure' value='Add' class="btn btn-primary add_button"/>
-	
+	</span>
 		</div>	
-	<div id='sugar_input'>
-<h2>Blood Sugar</h2>
+		
+	<div id='sugar_input' class='widget'>
+<h2>Blood Sugar<i id='minimize_sugar' class="size_toggle icon-minus-sign"></i><i id='maximize_sugar' class='size_toggle icon-plus-sign'></i></h2>
+<span class='max_class'>
 	<select id='meal_input' class="form-control sugar_input_style">
   			<option>None Selected</option>
   			<option>Breakfast</option>
@@ -437,7 +443,7 @@ var colorPill=function(color_text){
 		</select>
 	<input type='text' id='reading_input' placeholder='Blood Sugar Level' class='sugar_input_style'/>
 	<input type='submit' id='add_sugar' value='Add' class="btn btn-primary add_button"/>
-
+</span>
 </div>
 	
     </div><!-- /.panel-center .contain -->
