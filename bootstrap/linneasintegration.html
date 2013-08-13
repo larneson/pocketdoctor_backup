@@ -61,7 +61,7 @@
   .delete_col{width:15px;}
   .edit_pressure{width:90%;}
   
-  .date_pill_col{width:15%}
+  .date_pill_col{width:25%}
   .time_pill_col{width:20%;}
   .date_sugar_col{width:15%}
   .time_sugar_col{width:15%}
@@ -116,10 +116,12 @@ var unAMPM=function(time){
 	var am_pm=minutes_split[1];
 	if (am_pm=='AM'){
 		hours=hours;
-	}else if(am_pm=='PM'){
-		hours=hours+12;
+	}else if(am_pm=='PM'&&hours!=12){
+		hours=hours-12;
 	}
-	var new_time=hours+':'+minutes;
+	var parsed_hours=parseInt(hours, 10)
+	var parsed_minutes=parseInt(minutes, 10)
+	var new_time=parsed_hours+':'+parsed_minutes;
 	return new_time;
 }
 
@@ -361,7 +363,8 @@ var makePill=function(name_text,dosage_text,time_text,time_ampm_text){
 			$(this).parents('.med_form').find('.dosage_update').val( $(this).parents('.med_class').find('.med_small').find('.dosage_class').text());
 			
 			//this doesn't change back -un ampm doesn't work
-			$(this).parents('.med_form').find('.time_update').val( unAMPM($(this).parents('.med_class').find('.med_small').find('.time_class').text()));
+			//$(this).parents('.med_form').find('.time_update').val( 
+			if ($(this).parents('.med_class'). find('.med_small').find('.time_class') .text()!=''){$(this).parents('.med_form').find('.time_update').val( unAMPM($(this).parents('.med_class').find('.med_small').find('.time_class').text()));}
 			 
 			//toggle big screen hiding
 			$(this).parents('.med_form').hide();
